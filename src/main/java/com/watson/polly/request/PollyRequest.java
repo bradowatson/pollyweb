@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.auth.InstanceProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.polly.AmazonPollyClient;
@@ -24,13 +25,12 @@ public class PollyRequest {
 
 	private final AmazonPollyClient polly;
 	private final Voice voice;
-	private static final String SAMPLE = "Hi my name is Kasey Watson and I'm a super cool chick and smoking hot!";
 
 	public PollyRequest(Region region) {
 		// create an Amazon Polly client in a specific region
 		polly = new AmazonPollyClient(new DefaultAWSCredentialsProviderChain(), 
 		new ClientConfiguration());
-		polly.setRegion(region);
+		
 		// Create describe voices request.
 		DescribeVoicesRequest describeVoicesRequest = new DescribeVoicesRequest();
 
@@ -67,7 +67,6 @@ public class PollyRequest {
 			@Override
 			public void playbackStarted(PlaybackEvent evt) {
 				System.out.println("Playback started");
-				System.out.println(SAMPLE);
 			}
 			
 			@Override
